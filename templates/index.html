@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pass Predictor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">PP</span>
+    <span class="brand-text">Pass Predictor</span>
+  </div>
+  <div class="brand-sub">Decision Tree · trained on 400 student records</div>
+</header>
+
+<main class="layout">
+
+  <!-- LEFT: control panel -->
+  <section class="panel control-panel">
+    <h1>Tune the inputs</h1>
+    <p class="hint">Drag each control, then run the model.</p>
+
+    <div class="control">
+      <div class="control-label">
+        <span>Study hours / day</span>
+        <span class="control-value mono" id="val-study">5.0</span>
+      </div>
+      <input type="range" id="study_hours" min="0" max="10" step="0.1" value="5">
+    </div>
+
+    <div class="control">
+      <div class="control-label">
+        <span>Attendance</span>
+        <span class="control-value mono" id="val-attendance">75%</span>
+      </div>
+      <input type="range" id="attendance" min="40" max="100" step="1" value="75">
+    </div>
+
+    <div class="control">
+      <div class="control-label">
+        <span>Previous exam marks</span>
+        <span class="control-value mono" id="val-marks">65%</span>
+      </div>
+      <input type="range" id="previous_marks" min="30" max="100" step="1" value="65">
+    </div>
+
+    <button class="run-btn" id="runBtn">
+      <span>Run Prediction</span>
+    </button>
+  </section>
+
+  <!-- RIGHT: gauge + result -->
+  <section class="panel result-panel">
+    <div class="gauge-wrap">
+      <svg viewBox="0 0 240 140" class="gauge">
+        <defs>
+          <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#fb7185" />
+            <stop offset="50%" stop-color="#fbbf6a" />
+            <stop offset="100%" stop-color="#5eead4" />
+          </linearGradient>
+        </defs>
+        <path d="M 20 120 A 100 100 0 0 1 220 120" class="gauge-track" />
+        <path d="M 20 120 A 100 100 0 0 1 220 120" class="gauge-fill" id="gaugeFill" />
+        <line x1="120" y1="120" x2="120" y2="35" id="needle" class="needle" />
+        <circle cx="120" cy="120" r="7" class="needle-hub" />
+      </svg>
+      <div class="gauge-readout">
+        <span class="mono gauge-percent" id="gaugePercent">--</span>
+        <span class="gauge-label">pass probability</span>
+      </div>
+    </div>
+
+    <div class="stamp" id="stamp">READY</div>
+
+    <div class="history">
+      <div class="history-title">Recent runs</div>
+      <div class="history-list" id="historyList">
+        <div class="history-empty">No predictions yet — run one above.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
